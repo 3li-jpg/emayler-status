@@ -79,4 +79,12 @@ status-website:
       nav [aria-current] { color: var(--em-strong); }
       article dl, article p, article div { color: var(--em-dim); }
       a { text-underline-offset: 3px; }
+      /* Upptime paints its teal response-time PNG as the card background.
+         Repaint it on a greyscale layer behind the text. isolation keeps the
+         layer above the card colour; the full-card link still works. */
+      article.graph { background-image: none !important; isolation: isolate; }
+      article.graph::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+        background-image: var(--background); background-size: contain; background-repeat: no-repeat;
+        background-position: right center; filter: grayscale(1) contrast(1.4); opacity: var(--graph-opacity); }
+      @media (prefers-color-scheme: dark) { article.graph::before { filter: grayscale(1) invert(1) contrast(1.2); } }
     </style>
